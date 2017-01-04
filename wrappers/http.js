@@ -1,4 +1,4 @@
-import xs from '../libs/xstream/index'
+import xs from '../lib/xstream/index'
 
 let http =  {}
 
