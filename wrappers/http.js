@@ -31,13 +31,53 @@ function http_request(
         header: header,
         method: method, 
         success: res => listener.next(res),
-        fail: () => listener.error('something is wrong'),
+        fail: () => listener.error(`http request failed: ${url} | method: ${method} | data: ${data} | header: ${header}`),
         complete: () => listener.complete()
       })
     },
-    stop: ()=>{
+    stop: () => {}
+  }
+  return xs.create(producer)
+}
 
-    }
+http.uploadFile = (
+  url, 
+  filePath, 
+  name, 
+  header={},
+  formData={}) => {
+  const producer = {
+    start: listener => {
+      wx.uploadFile({
+        url: url,
+        filePath: filePath,
+        name: name,
+        header: header,
+        formData: formData,
+        success: res => listener.next(res),
+        fail: () => listener.error('upload failed'),
+        complete: () => listener.complete()
+      })
+    },
+    stop: () => {}
+  }
+  return xs.create(producer)
+}
+
+http.downloadFile = (
+  url, 
+  header={}) => {
+  const producer = {
+    start: listener => {
+      wx.downloadFile({
+        url: url,
+        header: header,
+        success: res => listener.next(res),
+        fail: () => listener.error('download failed'),
+        complete: () => listener.complete()
+      })
+    },
+    stop: () => {}
   }
   return xs.create(producer)
 }
