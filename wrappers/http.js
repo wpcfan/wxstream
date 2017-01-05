@@ -1,26 +1,33 @@
 import xs from '../lib/xstream/index'
 
+const REQ_METHOD = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  DELETE: 'DELETE'
+}
+
 let http =  {}
 
 http.get = (url, data={}, header={'content-type': 'application/json'}) => {
-  return http_request(url, 'GET', data, header) 
+  return http_request(url, REQ_METHOD.GET, data, header) 
 }
 
 http.post = (url, data={}, header={'content-type': 'application/json'}) => {
-  return http_request(url, 'POST', data, header)
+  return http_request(url, REQ_METHOD.POST, data, header)
 }
 
 http.put = (url, data={}, header={'content-type': 'application/json'}) => {
-  return http_request(url, 'PUT', data, header)
+  return http_request(url, REQ_METHOD.PUT, data, header)
 }
 
 http.delete = (url, data={}, header={'content-type': 'application/json'}) => {
-  return http_request(url, 'DELETE', data, header)
+  return http_request(url, REQ_METHOD.DELETE, data, header)
 }
 
 function http_request(
   url, 
-  method='GET', 
+  method=REQ_METHOD.GET, 
   data={}, 
   header={'content-type': 'application/json'}) {
   const producer = {
