@@ -1,8 +1,8 @@
 import xs from '../lib/xstream/index'
 
-let fromEvent = {}
+let event = {}
 
-fromEvent.fromInputEvent = (srcObj, propertyName) => {
+event.fromInputEvent = (srcObj, propertyName) => {
   const evProducer = {
     start: (listener) => {
       Object.defineProperty(
@@ -16,5 +16,5 @@ fromEvent.fromInputEvent = (srcObj, propertyName) => {
 }
 
 module.exports = {
-  fromEvent: fromEvent
+  event: event
 }
