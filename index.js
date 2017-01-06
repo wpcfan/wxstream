@@ -3,7 +3,7 @@ import debounce from './lib/xstream/extra/debounce'
 import concat from './lib/xstream/extra/concat'
 import dropRepeats from './lib/xstream/extra/dropRepeats'
 import { http } from './wrappers/http'
-import { event } from './wrappers/from-event'
+import { event } from './wrappers/event'
 import { image } from './wrappers/image'
 import { socket } from './wrappers/socket'
 import { file } from './wrappers/file'
@@ -12,6 +12,7 @@ import { voice } from './wrappers/voice'
 import { audio } from './wrappers/audio'
 import { video } from './wrappers/video'
 import { storage } from './wrappers/storage'
+import { location } from './wrappers/storage'
 import { device } from './wrappers/device'
 
 module.exports = {
@@ -26,6 +27,7 @@ module.exports = {
   audio: audio,
   video: video,
   storage: storage,
+  location: location,
   device: device,
   debounce: debounce,
   concat: concat,
