@@ -1,10 +1,18 @@
-import { xs } from './lib/xstream/index'
-import { debounce } from './lib/xstream/extra/debounce'
+import xs from './lib/xstream/index'
+import debounce from './lib/xstream/extra/debounce'
+import concat from './lib/xstream/extra/concat'
+import dropRepeats from './lib/xstream/extra/dropRepeats'
 import { http } from './wrappers/http'
 import { event } from './wrappers/from-event'
 import { image } from './wrappers/image'
 import { socket } from './wrappers/socket'
 import { file } from './wrappers/file'
+import { record } from './wrappers/record'
+import { voice } from './wrappers/voice'
+import { audio } from './wrappers/audio'
+import { video } from './wrappers/video'
+import { storage } from './wrappers/storage'
+import { device } from './wrappers/device'
 
 module.exports = {
   xs: xs,
@@ -13,5 +21,13 @@ module.exports = {
   file: file,
   image: image,
   socket: socket,
-  debounce: debounce
+  record: record,
+  voice: voice,
+  audio: audio,
+  video: video,
+  storage: storage,
+  device: device,
+  debounce: debounce,
+  concat: concat,
+  dropRepeats: dropRepeats
 }

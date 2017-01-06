@@ -24,12 +24,8 @@ socket.connect = (url, data={}, header={}, method=CONN_METHOD.GET) => {
         header: header,
         method: method,
         success: () => {
-          wx.onSocketOpen(res => {
-            listener.next(res)
-          })
-          wx.onSocketError(res => {
-            listener.error('socket connection cannot open and response is: ' + res)
-          })
+          wx.onSocketOpen(res => listener.next(res))
+          wx.onSocketError(res => listener.error(res))
         },
         fail: () => listener.error('connect failed'),
         complete: () => listener.complete()
@@ -70,7 +66,7 @@ socket.onMsg = () => {
   const producer = {
     start: listener => {
       wx.onSocketMessage(res => {
-        listener.next(res)
+        listener.next(res) // it should be an infinite stream
       })
     },
     stop: () => {}
@@ -84,6 +80,7 @@ socket.close = () => {
       wx.closeSocket()
       wx.onSocketClose(res => {
         listener.next(res)
+        listener.complete()
       })
     },
     stop: () => {}
