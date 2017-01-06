@@ -10,7 +10,7 @@ video.choose = (sourceType=['album', 'camera'], maxDuration=60, camera='back') =
 				maxDuration: maxDuration,
 				camera: camera,
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},

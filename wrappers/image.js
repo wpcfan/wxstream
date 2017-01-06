@@ -10,7 +10,7 @@ image.choose = (count=9, size=['original', 'compressed'], soure=['album', 'camer
         sizeType: size,
         sourceType: soure,
         success: res => listener.next(res),
-        fail: () => listener.error('image choosing failed'),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },
@@ -26,7 +26,7 @@ image.preview = (urls=[], current='') => {
         current: current,
         urls: urls,
         success: res => listener.next(res),
-        fail: () => listener.error('image preview failed'),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },
@@ -41,7 +41,7 @@ image.info = (src='') => {
       wx.getImageInfo({
         src: src,
         success: res => listener.next(res),
-        fail: () => listener.error('image preview failed'),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },

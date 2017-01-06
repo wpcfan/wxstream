@@ -7,7 +7,7 @@ device.sysInfo = () => {
 		start: listener => {
 			wx.getSystemInfo({
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -21,7 +21,7 @@ device.network = () => {
 		start: listener => {
 			wx.getNetworkType({
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -60,7 +60,7 @@ device.dial = (phoneNumber) => {
 			wx.makePhoneCall({
         phoneNumber: phoneNumber,
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -74,7 +74,7 @@ device.scan = () => {
 		start: listener => {
 			wx.scanCode({
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},

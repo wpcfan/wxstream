@@ -9,7 +9,7 @@ storage.set = (key, data) => {
         key: key,
         data: data,
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -24,7 +24,7 @@ storage.get = (key) => {
 			wx.getStorage({
         key: key,
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -38,7 +38,7 @@ storage.info = () => {
 		start: listener => {
 			wx.getStorageInfo({
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -53,7 +53,7 @@ storage.remove = () => {
 			wx.removeStorage({
         key: key,
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -67,7 +67,7 @@ storage.clear = () => {
 		start: listener => {
 			wx.clearStorage({
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},

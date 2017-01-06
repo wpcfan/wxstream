@@ -8,7 +8,7 @@ file.save = (tempFilePath) => {
       wx.saveFile({
         tempFilePath: tempFilePath,
         success: res => listener.next(res),
-        fail: () => listener.error('file cannot be saved'),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },
@@ -22,7 +22,7 @@ file.list = () => {
     start: listener => {
       wx.getSavedFileList({
         success: res => listener.next(res),
-        fail: res => listener.error(res),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },
@@ -37,7 +37,7 @@ file.info = (filePath) => {
       wx.getSavedFileInfo({
         filePath: filePath,
         success: res => listener.next(res),
-        fail: res => listener.error(res),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },
@@ -52,7 +52,7 @@ file.remove = (filePath) => {
       wx.removeSavedFile({
         filePath: filePath,
         success: res => listener.next(res),
-        fail: res => listener.error(res),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },
@@ -67,7 +67,7 @@ file.open = (filePath) => {
       wx.openDocument({
         filePath: filePath,
         success: res => listener.next(res),
-        fail: res => listener.error(res),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },

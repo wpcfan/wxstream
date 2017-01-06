@@ -38,7 +38,7 @@ function http_request(
         header: header,
         method: method, 
         success: res => listener.next(res),
-        fail: () => listener.error(`http request failed: ${url} | method: ${method} | data: ${data} | header: ${header}`),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },
@@ -62,7 +62,7 @@ http.uploadFile = (
         header: header,
         formData: formData,
         success: res => listener.next(res),
-        fail: () => listener.error('upload failed'),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },
@@ -80,7 +80,7 @@ http.downloadFile = (
         url: url,
         header: header,
         success: res => listener.next(res),
-        fail: () => listener.error('download failed'),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },

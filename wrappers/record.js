@@ -7,7 +7,7 @@ record.start = () => {
 		start: listener => {
 			wx.startRecord({
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -21,7 +21,7 @@ record.stop = () => {
 		start: listener => {
 			wx.stopRecord({
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},

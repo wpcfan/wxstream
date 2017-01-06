@@ -25,9 +25,9 @@ socket.connect = (url, data={}, header={}, method=CONN_METHOD.GET) => {
         method: method,
         success: () => {
           wx.onSocketOpen(res => listener.next(res))
-          wx.onSocketError(res => listener.error(res))
+          wx.onSocketError(res => listener.error(new Error(res.errMsg)))
         },
-        fail: () => listener.error('connect failed'),
+        fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
       })
     },
@@ -45,14 +45,14 @@ socket.sendMsg = (data) => {
         data.map(element => wx.sendSocketMessage({
           element,
           success: () => listener.next(element),
-          fail: () => listener.error('sending ' + element + ' failed'),
+          fail: res => listener.error(new Error(res.errMsg)),
           complete: () => listener.complete()
         }))
       } else {
         wx.sendSocketMessage({
           data,
           success: () => listener.next(data),
-          fail: () => listener.error('sending ' + data + ' failed'),
+          fail: res => listener.error(new Error(res.errMsg)),
           complete: () => listener.complete()
         })
       }

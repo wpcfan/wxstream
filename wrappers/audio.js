@@ -7,7 +7,7 @@ audio.state = () => {
 		start: listener => {
 			wx.getBackgroundAudioPlayerState({
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -24,7 +24,7 @@ audio.play = (dataUrl, title, coverImageUrl) => {
         title: title,
         coverImageUrl: coverImageUrl,
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
@@ -51,7 +51,7 @@ audio.seek = (position) => {
 			wx.playBackgroundAudio({
         position: position,
 				success: res => listener.next(res),
-				fail: res => listener.error(res),
+				fail: res => listener.error(new Error(res.errMsg)),
 				complete: () => listener.complete()
 			})
 		},
