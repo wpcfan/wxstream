@@ -2,13 +2,13 @@ import xs from '../lib/xstream/index'
 
 let event = {}
 
-event.fromInputEvent = (srcObj, propertyName) => {
+event.fromEvent = (srcObj, propertyName) => {
   const evProducer = {
     start: (listener) => {
       Object.defineProperty(
         srcObj, 
         propertyName, 
-        {value: ev => listener.next(ev.detail.value)})
+        {value: ev => listener.next(ev)})
     },
     stop: () => {}
   }
