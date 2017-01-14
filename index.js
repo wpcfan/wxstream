@@ -14,6 +14,7 @@ import { video } from './wrappers/video'
 import { storage } from './wrappers/storage'
 import { location } from './wrappers/storage'
 import { device } from './wrappers/device'
+import { user } from './wrappers/user'
 
 module.exports = {
   xs: xs,
@@ -29,6 +30,7 @@ module.exports = {
   storage: storage,
   location: location,
   device: device,
+  user: user,
   debounce: debounce,
   concat: concat,
   dropRepeats: dropRepeats

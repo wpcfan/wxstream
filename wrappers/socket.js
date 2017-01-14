@@ -15,7 +15,11 @@ let socket =  {
   CONN_METHOD: CONN_METHOD
 }
 
-socket.connect = (url, data={}, header={}, method=CONN_METHOD.GET) => {
+socket.connect = (
+  url, 
+  data = {}, 
+  header = {'content-type': 'application/json'}, 
+  method=CONN_METHOD.GET) => {
   const producer = {
     start: listener => {
       wx.connectSocket({
@@ -23,12 +27,8 @@ socket.connect = (url, data={}, header={}, method=CONN_METHOD.GET) => {
         data: data,
         header: header,
         method: method,
-        success: () => {
-          wx.onSocketOpen(res => listener.next(res))
-          wx.onSocketError(res => listener.error(new Error(res.errMsg)))
-        },
-        fail: res => listener.error(new Error(res.errMsg)),
-        complete: () => listener.complete()
+        success: res => listener.next(res),
+        fail: res => listener.error(new Error(res.errMsg))
       })
     },
     stop: () => {}
@@ -36,6 +36,28 @@ socket.connect = (url, data={}, header={}, method=CONN_METHOD.GET) => {
   return xs.create(producer)
 }
 
+socket.onOpen = () => {
+  const producer = {
+    start: listener => {
+      wx.onSocketOpen(res => {
+        listener.next(res)
+        listener.complete()
+      })
+    },
+    stop: () => {}
+  }
+  return xs.create(producer)
+}
+
+socket.onErr = () => {
+  const producer = {
+    start: listener => {
+      wx.onSocketError(res => listener.next(res))
+    },
+    stop: () => {}
+  }
+  return xs.create(producer)
+}
 
 socket.sendMsg = (data) => {
   const producer = {
@@ -45,15 +67,13 @@ socket.sendMsg = (data) => {
         data.map(element => wx.sendSocketMessage({
           element,
           success: () => listener.next(element),
-          fail: res => listener.error(new Error(res.errMsg)),
-          complete: () => listener.complete()
+          fail: res => listener.error(new Error(res.errMsg))
         }))
       } else {
         wx.sendSocketMessage({
           data,
           success: () => listener.next(data),
-          fail: res => listener.error(new Error(res.errMsg)),
-          complete: () => listener.complete()
+          fail: res => listener.error(new Error(res.errMsg))
         })
       }
     },

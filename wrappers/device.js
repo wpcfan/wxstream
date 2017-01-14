@@ -45,7 +45,7 @@ device.onAccChange = () => {
 device.onCompChange = () => {
   const producer = {
 		start: listener => {
-			wx.onAccelerometerChange(res => {
+			wx.onCompassChange(res => {
         listener.next(res) //it seems an infinite stream so it never ends
       })
 		},

@@ -1,29 +1,11 @@
 import xs from '../lib/xstream/index'
 
-const SIZE = {
-  ORIGINAL: ['original'],
-  COMPRESSED: ['compressed'],
-  BOTH: ['original', 'compressed']
-}
+let user =  {}
 
-const SOURCE = {
-  ALBUM: ['album'],
-  CAMERA: ['camera'],
-  BOTH: ['album', 'camera']
-}
-
-let image =  {
-  SIZE: SIZE,
-  SOURCE: SOURCE
-}
-
-image.choose = (count=9, size=SIZE.BOTH, soure=SOURCE.BOTH) => {
+user.login = () => {
   const producer = {
     start: listener => {
-      wx.chooseImage({
-        count: count,
-        sizeType: size,
-        sourceType: soure,
+      wx.login({
         success: res => listener.next(res),
         fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
@@ -34,12 +16,10 @@ image.choose = (count=9, size=SIZE.BOTH, soure=SOURCE.BOTH) => {
   return xs.create(producer)
 }
 
-image.preview = (urls=[], current='') => {
+user.check = () => {
   const producer = {
     start: listener => {
-      wx.previewImage({
-        current: current,
-        urls: urls,
+      wx.checkSession({
         success: res => listener.next(res),
         fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
@@ -50,11 +30,10 @@ image.preview = (urls=[], current='') => {
   return xs.create(producer)
 }
 
-image.info = (src='') => {
+user.info = () => {
   const producer = {
     start: listener => {
-      wx.getImageInfo({
-        src: src,
+      wx.getUserInfo({
         success: res => listener.next(res),
         fail: res => listener.error(new Error(res.errMsg)),
         complete: () => listener.complete()
@@ -66,5 +45,5 @@ image.info = (src='') => {
 }
 
 module.exports = {
-  image: image
+  user: user
 }
