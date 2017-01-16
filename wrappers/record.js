@@ -6,9 +6,11 @@ record.start = () => {
 	const producer = {
 		start: listener => {
 			wx.startRecord({
-				success: res => listener.next(res),
 				fail: res => listener.error(new Error(res.errMsg)),
-				complete: () => listener.complete()
+				complete: res => {
+          listener.next(res)
+					listener.complete()
+        }
 			})
 		},
 		stop: () => {}
